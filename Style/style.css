@@ -1,0 +1,13 @@
+/* style.css */
+body{
+
+}
+
+.widget{
+	border: 1px solid darkgrey;
+	border-radius: .5em;
+	padding: .5em;
+	margin: .5em;
+	height: 100%;
+	box-shadow: 5px 5px 5px lightgrey;
+}
