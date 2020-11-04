@@ -11,3 +11,15 @@ body{
 	height: 100%;
 	box-shadow: 5px 5px 5px lightgrey;
 }
+
+.kpi{
+	font-size: 2em;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+	margin-top: .215em;;
+}
+
+.point{
+	opacity: .3;
+}
