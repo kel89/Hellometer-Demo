@@ -63,8 +63,8 @@ Scatter.prototype.setupSVG = function(){
 }
 
 Scatter.prototype.setupData = function(){
-	// I think we will be plotting raw data
-	return;
+	// All we have to do here is filter to show periods of interest
+	this.data = data.filter(x => periods.indexOf(x.day_part) != -1);
 }
 
 /**
@@ -82,6 +82,13 @@ Scatter.prototype.setupScales = function(){
 
 	this.y = d3.scaleLinear()
 		.domain([0, d3.max(this.data.map(x => x.tts))]);
+
+	// Other setupScales
+	if (size == "TTS"){
+		this.sizeScale = d3.scaleLinear()
+			.domain(d3.extent(data.map(d => d.tts)))
+			.range([2, 10]);
+	}
 }
 
 /**
@@ -106,11 +113,25 @@ Scatter.prototype.getY = function(d){
 }
 
 Scatter.prototype.getR = function(d){
-	return 5;
+	if (size == "TTS"){
+		return this.sizeScale(d.tts);
+	}
+	else{
+		// Return default size
+		return 5;
+	}
 }
 
 Scatter.prototype.getColor = function(d){
-	return "blue";
+	if (color == "Period"){
+		// Color category
+		return d3.schemeCategory10[d.day_part]
+	}
+	else{
+		// Default Hellometer color
+		return "#3AA3F2";
+	}
+
 }
 
 /**
@@ -185,6 +206,8 @@ Scatter.prototype.updateAxes = function(){
 }
 
 Scatter.prototype.plot = function(){
+	let _this = this;
+
 	let pointSet = this.g.selectAll(".point")
 		.data(this.data, d => d.customer_number);
 
@@ -195,11 +218,20 @@ Scatter.prototype.plot = function(){
 		.attr('cy', d => this.getY(d))
 		.attr('r', d => this.getR(d))
 		.attr('fill', d => this.getColor(d))
-		.style('opacity', 0);
+		.style('opacity', 0)
+		.on('mouseover', function(event, d){
+			_this.highlight(event, d);
+		})
+		.on('mousemove', function(event, d){
+			_this.moveTooltip(event, d);
+		})
+		.on('mouseout', function(event, d){
+			_this.unhighlight(event, d);
+		});
 
 	// transition in the new points
 	newPoints.transition()
-		.style('opacity', .3);
+		.style('opacity', null);
 
 	// Move the current points
 	pointSet
@@ -207,8 +239,7 @@ Scatter.prototype.plot = function(){
 		.attr('cx', d => this.getX(d))
 		.attr('cy', d => this.getY(d))
 		.attr('r', d => this.getR(d))
-		.attr('fill', d => this.getColor(d))
-		.attr('fill', 'blue');
+		.attr('fill', d => this.getColor(d));
 
 	// Remove the old points
 	pointSet.exit()
@@ -228,4 +259,39 @@ Scatter.prototype.update = function(){
 	this.setupScales();
 	this.updateAxes();
 	this.plot();
+}
+
+/**
+Takes in the data for a circle and a refernce to it
+highlights it and produce a myTooltip
+*/
+Scatter.prototype.highlight = function(event, d){
+	// fill tooltip
+	$("#tooltip").html(`
+		<b>Customer: </b>${d.customer_number}<br>
+		<b>Time of Day: </b>${d.day_part}<br>
+		<b>TTS: </b>${d.tts}
+	`);
+
+	d3.select("#tooltip")
+		.style("top", (event.pageY - 20) + "px")
+		.style("left", (event.pageX - 30) + "px")
+		.style('display', 'block');
+};
+
+/**
+Takes in data and reference to circle, and amoves the tooltip
+*/
+Scatter.prototype.moveTooltip = function(event, d){
+	d3.select("#tooltip")
+		.style("top", (event.pageY - 20) + "px")
+		.style("left", (event.pageX + 20) + "px");
+}
+
+/**
+unhighlights and hides myTooltip
+*/
+Scatter.prototype.unhighlight = function(event, ){
+	d3.select("#tooltip")
+		.style('display', 'none');
 }

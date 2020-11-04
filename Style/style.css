@@ -20,6 +20,23 @@ body{
 	margin-top: .215em;;
 }
 
+.myTooltip{
+	position: absolute;
+	background-color: black;
+	opacity: .8;
+	padding: .25em;
+	border-radius: .25em;
+	color: white;
+	display: none;
+	font-size: .5em;
+}
+
 .point{
 	opacity: .3;
+}
+
+.point:hover{
+	border: 2px solid black;
+	fill: gold;
+	opacity: 1;
 }

@@ -32,11 +32,14 @@ buildKPIs();
 // define defaults
 let stratify = "None";
 let color = "None";
+let size = "None";
+let periods = [1,2,3,4,5,6]; // which periods to show
 let scatter = new Scatter({
 	targetId: "chartTarget",
 	data: data,
 	stratifyOptions: ["None", "Period"],
-	colorOptions: ["None", "Period", "TTS"]
+	colorOptions: ["None", "Period", "TTS"],
+	sizeOptions: ["None", "TTS"]
 });
 
 // Build Scrub
