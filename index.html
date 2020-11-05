@@ -32,7 +32,7 @@
 <body>
 	<nav class="navbar navbar-light bg-light">
 		<a class="navbar-brand" href="#">
-			<img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+			<img src="Assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
 			&emsp;Hellometer
 		</a>
 		<ul class='nav navbar-nav navbar-right'>
@@ -76,41 +76,6 @@
 		</div>
 	</div>
 </body>
-<script src='data.js'></script>
+<script src='Data/data.js'></script>
 <script src='main.js'></script>
-<script>
-// data.forEach(function(d){
-// 	d['date'] = new Date(d.date);
-// })
-//
-// let w = $("#chartTarget").width();
-// let h = $("#chartTarget").height();
-// let svg = d3.select("#chartTarget")
-// 	.append('svg')
-// 	.attr('width', w)
-// 	.attr('height', h);
-//
-// let x = d3.scaleTime()
-// 	.domain(d3.extent(data.map(x => x.date)))
-// 	.range([0, w]);
-//
-// let y = d3.scaleLinear()
-// 	.domain([0, d3.max(data.map(x => x.tts))])
-// 	.range([h, 0]);
-//
-// let pointSet = svg.selectAll(".point")
-// 	.data(data);
-//
-// let newPoints = pointSet.enter()
-// 	.append('circle')
-// 	.attr('cx', d => 0)
-// 	.attr('cy', d => 0)
-// 	.attr('r', 0);
-//
-// newPoints.transition()
-// 	.delay((d,i) => i*.1)
-// 	.attr('cx', d => x(d.date))
-// 	.attr('cy', d => y(d.tts))
-// 	.attr('r', 5);
-</script>
 </html>

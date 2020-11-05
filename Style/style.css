@@ -12,6 +12,17 @@ body{
 	box-shadow: 5px 5px 5px lightgrey;
 }
 
+
+/* A few hard coded heights*/
+#selector, #chartTarget{
+	max-height: 700px;
+}
+
+#kpi1, #kpi2, #kpi3{
+	max-height: 120px;;
+}
+
+
 .kpi{
 	font-size: 2em;
 	font-weight: bold;
