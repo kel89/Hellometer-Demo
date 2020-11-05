@@ -34,6 +34,9 @@ let stratify = "None";
 let color = "None";
 let size = "None";
 let periods = [1,2,3,4,5,6]; // which periods to show
+let periodNames = [
+	"Breakfast", "Lunch", "Afternoon", "Dinner", "Evening", "Late Night"
+]
 let scatter = new Scatter({
 	targetId: "chartTarget",
 	data: data,
@@ -42,4 +45,21 @@ let scatter = new Scatter({
 	sizeOptions: ["None", "TTS"]
 });
 
-// Build Scrub
+let cp = new ControlPane({
+	targetId: "selector",
+	groupOptions: ['None', "Period"],
+	colorOptions: ['None', "Period", "TTS"],
+	sizeOptions: ["None", "TTS"],
+	filterOptions: periodNames
+})
+
+/**
+ * Function to handle updating across the board.
+ * Now, this is really trivial here as we only have one truly dynamic widget
+ * but I will keep it for good practice. If there are more widgets
+ * this is an effective way to handle interdependencies, without having
+ * to have each widget be aware of the others
+ */
+function masterUpdate(){
+	scatter.update();
+}

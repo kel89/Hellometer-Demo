@@ -1,6 +1,6 @@
 /* style.css */
 body{
-
+/* font-size: .75em; */
 }
 
 .widget{
@@ -39,4 +39,43 @@ body{
 	border: 2px solid black;
 	fill: gold;
 	opacity: 1;
+}
+
+p{
+	font-size: .5em;
+	margin-bottom: .5em;
+}
+
+.input-group-text, .custom-select{
+	font-size: .65em;
+}
+
+select {
+	width: 100%;
+}
+
+#filterGroup{
+	width: 100%;
+}
+
+.filterOption{
+	width:100%;
+	margin: .5em .1em;
+	border-radius: 5px;
+	border: 1px solid grey;
+	padding: .5em;
+	font-size: .65em;
+	cursor: pointer;
+	transition: .2s;
+}
+
+.filterOption:hover{
+	font-weight: bold;
+	box-shadow: 3px 3px 3px grey;
+}
+
+.selectedFilter{
+	background-color: #3AA3F2;
+	border: 2px solid grey;
+	color: white;
 }

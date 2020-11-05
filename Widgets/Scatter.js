@@ -89,6 +89,12 @@ Scatter.prototype.setupScales = function(){
 			.domain(d3.extent(data.map(d => d.tts)))
 			.range([2, 10]);
 	}
+
+	if (color == "TTS"){
+		this._intSizeScale = d3.scaleLinear()
+			.domain(d3.extent(data.map(d => d.tts)));
+		this.colorScale = d3.interpolateViridis
+	}
 }
 
 /**
@@ -126,6 +132,10 @@ Scatter.prototype.getColor = function(d){
 	if (color == "Period"){
 		// Color category
 		return d3.schemeCategory10[d.day_part]
+	}
+	else if (color == "TTS"){
+		let int = this._intSizeScale(d.tts);
+		return this.colorScale(int);
 	}
 	else{
 		// Default Hellometer color
