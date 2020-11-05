@@ -26,6 +26,7 @@
 	<script src='Helpers/kpiHelpers.js'></script>
 	<script src='Widgets/Scatter.js'></script>
 	<script src='Widgets/ControlPane.js'></script>
+	<script src='Helpers/helpHelpers.js'></script>
 </head>
 
 <body>
@@ -34,6 +35,9 @@
 			<img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
 			&emsp;Hellometer
 		</a>
+		<ul class='nav navbar-nav navbar-right'>
+			<a href="#" onclick='launchHelp()'>Help</a>
+		</ul>
 	</nav>
 	<div class='container-fluid'>
 		<div class='row mb-3'>
@@ -66,13 +70,8 @@
 			<div class='col-3'>
 				<div class='widget' id='selector'></div>
 			</div>
-			<div class='col-9' style='height:60vh;'>
+			<div class='col-9' style='height:70vh;'>
 				<div class='widget' id='chartTarget'></div>
-			</div>
-		</div>
-		<div class='row'>
-			<div class='col' style='height: 10vh;'>
-				<div class='widget' id='timeScrub'></div>
 			</div>
 		</div>
 	</div>

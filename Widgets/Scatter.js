@@ -71,17 +71,34 @@ Scatter.prototype.setupData = function(){
 Determines the X and Y scales based on the parameters
 */
 Scatter.prototype.setupScales = function(){
-	if (stratify == "None"){
+
+	if (stratify == "Date"){
 		this.x = d3.scaleTime()
 			.domain(d3.extent(this.data.map(x => x.date)));
 	}
-	if (stratify == "Period"){
+	else if(stratify == "Period"){
 		this.x = d3.scaleBand()
 			.domain([1,2,3,4,5,6]);
 	}
+	else {
+		// TTS
+		this.x = d3.scaleLinear()
+			.domain([0, d3.max(this.data.map(x => x.tts))]);
+	}
 
-	this.y = d3.scaleLinear()
-		.domain([0, d3.max(this.data.map(x => x.tts))]);
+	if (yStratify == "TTS"){
+		this.y = d3.scaleLinear()
+			.domain([0, d3.max(this.data.map(x => x.tts))]);
+	}
+	if (yStratify == "Date"){
+		this.y = d3.scaleTime()
+			.domain(d3.extent(this.data.map(x => x.date)));
+	}
+	else if(yStratify == "Period"){
+		this.y = d3.scaleBand()
+			.domain([1,2,3,4,5,6]);
+	}
+
 
 	// Other setupScales
 	if (size == "TTS"){
@@ -106,8 +123,12 @@ Scatter.prototype.getX = function(d){
 		return this.x(d.day_part) + bw/2
 			+ d3.randomUniform(-1*bw/4, bw/4)();
 	}
-	else{
+	else if (stratify == "Date"){
 		return this.x(d.date);
+	}
+	else{
+		// TTS
+		return this.x(d.tts);
 	}
 }
 
@@ -115,7 +136,19 @@ Scatter.prototype.getX = function(d){
 Takes in a data point and returns y coord
 */
 Scatter.prototype.getY = function(d){
-	return this.y(d.tts);
+	if (yStratify == "Period"){
+		let bw = this.y.bandwidth();
+		return this.y(d.day_part) + bw/2
+			+ d3.randomUniform(-1*bw/4, bw/4)();
+	}
+	else if (yStratify == "Date"){
+		return this.y(d.date);
+	}
+	else{
+		// TTS
+		return this.y(d.tts);
+	}
+
 }
 
 Scatter.prototype.getR = function(d){
@@ -204,6 +237,13 @@ Scatter.prototype.updateAxes = function(){
 		this.xAxis.tickFormat((d,i) => keys[i]);
 	}
 
+	if (yStratify == "Period"){
+		let keys = [
+			"Breakfast", "Lunch", "Afternoon", "Dinner", "Evening", "Late Night"
+		];
+		this.yAxis.tickFormat((d,i) => keys[i]);
+	}
+
 	this.xAxisG.transition()
 		.call(this.xAxis);
 	this.yAxisG.transition()
@@ -212,7 +252,8 @@ Scatter.prototype.updateAxes = function(){
 
 
 	// Update the labels
-	this.xAxisLabel.text(stratify == "None" ? "Date" : stratify)
+	this.xAxisLabel.text(stratify)
+	this.yAxisLabel.text(yStratify);
 }
 
 Scatter.prototype.plot = function(){

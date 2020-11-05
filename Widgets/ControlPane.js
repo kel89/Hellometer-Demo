@@ -53,9 +53,12 @@ ControlPane.prototype.writeHTML = function() {
 	// Make HTML will all dropdowns and filters
 	let html = `
 	<div class='container-fluid'>
-		${makeDropdown("Group By",
+		${makeDropdown("X Variable",
 			"Choose how customers are grouped along the X axis",
 			"groupDropdown")}
+		${makeDropdown("Y Variable",
+			"Choose how customers are grouped along the Y axis",
+			"yGroupDropdown")}
 		${makeDropdown("Color By",
 			"Determine how customer circles are shaded",
 			"colorDropdown")}
@@ -95,6 +98,7 @@ ControlPane.prototype.fillOptions = function() {
 
 	// Fill dropdowns with helpers
 	fillDropdown("groupDropdown", this.groupOptions);
+	fillDropdown("yGroupDropdown", this.yGroupOptions);
 	fillDropdown("colorDropdown", this.colorOptions);
 	fillDropdown("sizeDropdown", this.sizeOptions);
 
@@ -120,6 +124,14 @@ ControlPane.prototype.attachHandlers = function() {
 	$("#groupDropdown").change(function(){
 		// Update global
 		stratify = $("#groupDropdown").val();
+
+		// Update chart
+		masterUpdate();
+	});
+
+	$("#yGroupDropdown").change(function(){
+		// Update global
+		yStratify = $("#yGroupDropdown").val();
 
 		// Update chart
 		masterUpdate();

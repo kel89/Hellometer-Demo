@@ -79,3 +79,13 @@ select {
 	border: 2px solid grey;
 	color: white;
 }
+
+#infoModal .modal-header{
+	background-color: #3AA3F2;
+	color: white;
+}
+
+#infoModal p{
+	font-size: 1em;
+	margin-bottom: 1em;
+}

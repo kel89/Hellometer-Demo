@@ -25,12 +25,16 @@ This probably isn't too necesary as we only have two *real*
 widgets, and a few KPIs which I am just going to simply
 "build" as they are just static
 */
+// Build the help modal
+buildHelpModal();
+
 // Handle KPIs
 buildKPIs();
 
 // Build Chart-------------
 // define defaults
-let stratify = "None";
+let stratify = "Date";
+let yStratify = "TTS";
 let color = "None";
 let size = "None";
 let periods = [1,2,3,4,5,6]; // which periods to show
@@ -40,14 +44,15 @@ let periodNames = [
 let scatter = new Scatter({
 	targetId: "chartTarget",
 	data: data,
-	stratifyOptions: ["None", "Period"],
+	stratifyOptions: ["Date", "Period"],
 	colorOptions: ["None", "Period", "TTS"],
 	sizeOptions: ["None", "TTS"]
 });
 
 let cp = new ControlPane({
 	targetId: "selector",
-	groupOptions: ['None', "Period"],
+	groupOptions: ['Date', "Period", 'TTS'],
+	yGroupOptions: ['TTS', 'Date', 'Period'],
 	colorOptions: ['None', "Period", "TTS"],
 	sizeOptions: ["None", "TTS"],
 	filterOptions: periodNames
